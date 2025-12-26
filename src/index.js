@@ -15,15 +15,17 @@ app.use(cors({
 
 app.use(express.json())
 app.use(cookieparser())
-app.use("/uploads", express.static("uploads"));
+// app.use("/uploads", express.static("uploads"));
 
 
 
 app.use('/',routing)
 
+connectdb().catch(err => console.error("DB connection failed:", err))
+// connectdb().then(()=>{
+//     app.listen(port,()=>{
+//         console.log(`DataBase is runing in port ${port}`)
+//     })
+// })
 
-connectdb().then(()=>{
-    app.listen(port,()=>{
-        console.log(`DataBase is runing in port ${port}`)
-    })
-})
+export const handler = serverless(app)
