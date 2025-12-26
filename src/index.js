@@ -4,6 +4,7 @@ import connectdb from "./database/database_connection.js"
 import routing from "./route/routing.js"
 import cors from "cors"
 import cookieparser from "cookie-parser"
+import serverless from "serverless-http" 
 const app=express()
 dotenv.config()
 const port=process.env.PORT
