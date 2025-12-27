@@ -9,24 +9,22 @@ import cookieparser from "cookie-parser"
 const app=express()
 dotenv.config()
 const port=process.env.PORT
-
-app.use(cors({
-  origin: "https://sujalkarkiii-receipesharing-fronten.vercel.app",
-  credentials: true
-}));
-
+const allowedOrigins = [
+  "https://sujalkarkiii-receipesharing-fronten.vercel.app" // deployed frontend
+];
 
 app.use(cors({
   origin: function(origin, callback) {
     if(!origin) return callback(null, true); // allow Postman/cURL
-    if(!allowedOrigins.includes(origin)) return callback(new Error("Not allowed by CORS"), false);
+    if(!allowedOrigins.includes(origin)) {
+      return callback(new Error("Not allowed by CORS"), false);
+    }
     return callback(null, true);
   },
   credentials: true
 }));
 
-// Preflight requests
-app.options("*", cors({ credentials: true }));
+// Handle preflight OPTIONS requests;
 app.use(express.json())
 app.use(cookieparser())
 app.use("/uploads", express.static("uploads"));
