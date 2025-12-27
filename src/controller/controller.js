@@ -54,8 +54,8 @@ export const handlelogin = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "Lax",
+      secure: true,
+      sameSite: "None",
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     }).status(200).json({ message: "Login successful", success: true });
 
