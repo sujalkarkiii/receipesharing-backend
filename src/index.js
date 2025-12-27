@@ -11,10 +11,9 @@ dotenv.config()
 const port=process.env.PORT
 
 app.use(cors({
-    origin: "https://sujalkarkiii-receipesharing-fronten.vercel.app/",
-  credentials: true,
-}))
-
+  origin: "https://sujalkarkiii-receipesharing-fronten.vercel.app",
+  credentials: true
+}));
 app.use(express.json())
 app.use(cookieparser())
 app.use("/uploads", express.static("uploads"));
