@@ -4,7 +4,8 @@ import connectdb from "./database/database_connection.js"
 import routing from "./route/routing.js"
 import cors from "cors"
 import cookieparser from "cookie-parser"
-import serverless from "serverless-http" 
+
+
 const app=express()
 dotenv.config()
 const port=process.env.PORT
@@ -23,10 +24,10 @@ app.use("/uploads", express.static("uploads"));
 app.use('/',routing)
 
 connectdb().catch(err => console.error("DB connection failed:", err))
+
+
 connectdb().then(()=>{
     app.listen(port,()=>{
         console.log(`DataBase is runing in port ${port}`)
     })
 })
-
-export const handler = serverless(app)
