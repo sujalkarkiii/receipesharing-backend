@@ -22,7 +22,6 @@ app.use("/uploads", express.static("uploads"));
 
 app.use('/',routing)
 
-connectdb().catch(err => console.error("DB connection failed:", err))
 
 
 connectdb().then(()=>{
