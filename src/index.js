@@ -13,8 +13,11 @@ const allowedOrigins = [
   "http://localhost:5173",             
   "https://receipesharing.vercel.app" 
 ];
+
+
 app.use(cors({
   origin: function(origin,callback){
+     if (!origin) return callback(null, true); 
     if(allowedOrigins.includes(origin)){
       callback(null,true)
     }else{
@@ -43,8 +46,3 @@ connectdb()
     console.error("Database connection failed:", err)
   })
 
-
-// const allowedOrigins = [
-//   // "https://sujalkarkiii-receipesharing-fronten.vercel.app",
-//   "http://localhost:5173"
-// ];
