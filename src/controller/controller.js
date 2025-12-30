@@ -26,12 +26,13 @@ export const handleregister = async (req, res) => {
 }
 
 
-// login function
+
 
 export const handlelogin = async (req, res) => {
+  const isProduction= process.env.NODE_ENV ==="production"
   try {
     const { identifier, password } = req.body;
-
+    
     const user = await USER_DETAIL.findOne({
       $or: [{ email: identifier }, { phonenumber: identifier }]
     });
@@ -54,11 +55,11 @@ export const handlelogin = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "None",
+      secure: isProduction,
+      sameSite: isProduction? "None" : "Lax",
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     }).status(200).json({ message: "Login successful", success: true });
-
+    
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ "500": "Internal Server Error" });
