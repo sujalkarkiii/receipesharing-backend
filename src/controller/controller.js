@@ -29,30 +29,32 @@ export const handleregister = async (req, res) => {
 
 
 export const handlelogin = async (req, res) => {
-  const isProduction= process.env.NODE_ENV ==="production"
   try {
     const { identifier, password } = req.body;
     
     const user = await USER_DETAIL.findOne({
       $or: [{ email: identifier }, { phonenumber: identifier }]
     });
+    console.log("Body:", req.body);
+    console.log("Identifier:", identifier, "Password:", password);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
+    
     const validate = await bcrypt.compare(password, user.password);
-
+    
     if (!validate) {
       return res.status(401).json({ message: "Invalid password" });
     }
-
+    
     const token = jwt.sign(
       { id: user._id, username: user.username, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
-
+    
+    const isProduction= process.env.NODE_ENV ==="production"
     res.cookie("token", token, {
       httpOnly: true,
       secure: isProduction,
