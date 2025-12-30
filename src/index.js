@@ -9,10 +9,19 @@ const app=express()
 dotenv.config()
 const port=process.env.PORT
 
-
+const allowedOrigins = [
+  "http://localhost:5173",             
+  "https://receipesharing.vercel.app" 
+];
 app.use(cors({
-  origin:"http://localhost:5173",
-  credentials:true
+  origin: function(origin,callback){
+    if(allowedOrigins.includes(origin)){
+      callback(null,true)
+    }else{
+            callback(new Error("Not allowed by CORS"));
+    }
+    
+  }
 }))
 
 app.use(express.json())
