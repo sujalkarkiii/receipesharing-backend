@@ -10,7 +10,8 @@ dotenv.config()
 const port=process.env.PORT
 
 const allowedOrigins = [            
-  "https://receipesharing-git-main-sujalkarkiiis-projects.vercel.app/" 
+  "https://receipesharing.vercel.app" ,
+  "http://localhost:5173"
 ];
 
 app.use(cors({
