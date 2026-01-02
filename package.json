@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-      "start": "node src/index.js",
-      "dev": "nodemon src/index.js"
-  },
   "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -21,8 +21,10 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.4",
     "multer": "^2.0.2",
-    "nodemon": "^3.1.11",
     "parse-json": "^8.3.0",
     "serverless-http": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }

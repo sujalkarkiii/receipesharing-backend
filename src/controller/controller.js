@@ -88,7 +88,7 @@ export const handlepost = async (req, res) => {
     const { title, description } = req.body
     const postedBy = req.user.id
     const image = req.file
-    const imageurl = `http://localhost:${process.env.PORT}/uploads/${image.filename}`
+    const imageurl = `${req.protocol}://${req.get("host")}/uploads/${image.filename}`
     const postdata = new postmodel({
       title,
       description, image: imageurl, postedBy
@@ -185,7 +185,7 @@ export const handlecheckrequest = async (req, res) => {
       status: "pending",
     });
 
-    if (validare) {
+   if (validare.length > 0) {
       return res.status(200).json({
         exists: true,
         validare,
@@ -217,7 +217,8 @@ export const handleloadrequest = async (req, res) => {
       status: "pending",
     }).populate("sentby", "username")
 
-    if (requests) {
+  if (requests.length > 0) {
+
       return res.status(200).json({ requests, exist: true, message: "Fetched request" })
     }
     else {
@@ -319,11 +320,13 @@ export const handleloadfriend = async (req, res) => {
 
 export const handlelogout = async (req, res) => {
   try {
-    res.clearCookie("token", {
-      httpOnly: true,
-      secure: false,    
-      sameSite: "strict"
-    });
+      const isProduction = process.env.NODE_ENV === "production"
+        
+      res.clearCookie("token", {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? "None" : "Lax"
+      });
 
     return res.status(200).json({ message: "Logged out successfully" });
 
