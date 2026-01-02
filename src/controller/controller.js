@@ -88,7 +88,7 @@ export const handlepost = async (req, res) => {
     const { title, description } = req.body
     const postedBy = req.user.id
     const image = req.file
-    const imageurl = `${req.protocol}://${req.get("host")}/uploads/${image.filename}`
+    const imageurl = `https://${req.get("host")}/uploads/${image.filename}`;
     const postdata = new postmodel({
       title,
       description, image: imageurl, postedBy
